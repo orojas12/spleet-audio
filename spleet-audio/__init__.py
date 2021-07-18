@@ -8,7 +8,7 @@ def create_app(config=None):
     app = Flask(__name__)
 
     # set default config
-    app.config.from_object('audiosplitter.default_config')
+    app.config.from_object(__name__ + '.default_config')
     
     # overrides default config if applicable
     if config is not None:
