@@ -13,10 +13,14 @@
         <h3>Split any song into separate parts!</h3>
     </header>
     <main>
-        <div id="upload">
-            <input type="file" id="input_file" name="song" accept="audio/mpeg, audio/mp4, audio/wav">
+        <form id="upload">
+            <input type="file" id="song" name="song" accept="audio/mpeg, audio/mp4, audio/wav" />
+            <input type="radio" id="two-stem-separation" name="separation_type" value="2stems">
+            <label for="two-stem-separation">Vocals/accompaniment</label>
+            <input type="radio" id="four-stem-separation" name="separation_type" value="4stems">
+            <label for="four-stem-separation">Vocals/drums/bass/other</label>
             <button id="submit">Split</button>
-        </div>
+        </form>
     </main>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

@@ -1,8 +1,9 @@
 import os
 from flask import Blueprint, request, render_template, current_app
-from spleeter.separator import Separator
-from spleeter.audio.adapter import AudioAdapter
 from werkzeug.utils import secure_filename
+
+from .separation import separate_2stems, separate_4stems
+from .utils import id_generator
 
 bp = Blueprint('routes', __name__)
 
@@ -10,8 +11,8 @@ bp = Blueprint('routes', __name__)
 def index():
     return render_template('base.html', title="Spleet Audio")
 
-@bp.route('/split', methods=['POST'])
-def split():
+@bp.route('/spleet', methods=['POST'])
+def spleet():
     upload_folder = current_app.config['UPLOAD_FOLDER']
     output_folder = current_app.config['OUTPUT_FOLDER']
 
@@ -19,17 +20,17 @@ def split():
     if song is None:
         return '400'
 
-    filename = secure_filename(song.filename)
+    filename = os.path.splitext(secure_filename(song.filename))[0]
+    if filename == '' or filename is None:
+        filename = id_generator()
+
     filepath = os.path.join(upload_folder, filename)
     song.save(filepath)
 
-    separator_2stems = Separator('spleeter:2stems')
-    separator_4stems = Separator('spleeter:4stems')
-    audio_loader = AudioAdapter.default()
-    sample_rate = 44100
+    if request.form.get('separation_type') == '2stems':
+        separate_2stems(filepath, output_folder, filename)
+    elif request.form.get('separation_type') == '4stems':
+        separate_4stems(filepath, output_folder, filename)
 
-    waveform, _ = audio_loader.load(filepath, sample_rate=sample_rate)
-    prediction = separator_2stems.separate(waveform)
-    separator_2stems.save_to_file(prediction, filename, output_folder)
-        
     return '200'
+    
