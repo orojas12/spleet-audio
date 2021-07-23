@@ -12,19 +12,24 @@ def index():
 
 @bp.route('/split', methods=['POST'])
 def split():
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    output_folder = current_app.config['OUTPUT_FOLDER']
+
     song = request.files.get('song')
     if song is None:
         return '400'
-    print('Saving file...')
+
     filename = secure_filename(song.filename)
-    song.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+    filepath = os.path.join(upload_folder, filename)
+    song.save(filepath)
 
-    # audio_file = song.read()
-    # separator = Separator('spleeter:2stems')
-    # audio_loader = AudioAdapter.default()
-    # sample_rate = 44100
-    # waveform, _ = audio_loader.load(audio_file, sample_rate=sample_rate)
-    # prediction = separator.separate(waveform)
-    # print(prediction)
+    separator_2stems = Separator('spleeter:2stems')
+    separator_4stems = Separator('spleeter:4stems')
+    audio_loader = AudioAdapter.default()
+    sample_rate = 44100
 
+    waveform, _ = audio_loader.load(filepath, sample_rate=sample_rate)
+    prediction = separator_2stems.separate(waveform)
+    separator_2stems.save_to_file(prediction, filename, output_folder)
+        
     return '200'
