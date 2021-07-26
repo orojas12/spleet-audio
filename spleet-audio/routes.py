@@ -1,9 +1,10 @@
 import os
+
 from flask import Blueprint, request, render_template, current_app
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, send_file
 
 from .separation import separate_2stems, separate_4stems
-from .utils import id_generator
+from .utils import id_generator, zipped_output_file
 
 bp = Blueprint('routes', __name__)
 
@@ -31,6 +32,10 @@ def spleet():
         separate_2stems(filepath, output_folder, filename)
     elif request.form.get('separation_type') == '4stems':
         separate_4stems(filepath, output_folder, filename)
+    
+    prediction_path = os.path.join(output_folder, filename)
 
-    return '200'
+    song_zip = zipped_output_file(prediction_path)
+    
+    return send_file(song_zip, environ=request.environ, as_attachment=True, download_name=filename + '.zip', mimetype='application/zip')
     

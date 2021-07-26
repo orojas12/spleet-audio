@@ -13,9 +13,9 @@
         <h3>Split any song into separate parts!</h3>
     </header>
     <main>
-        <form id="upload">
+        <form id="upload", enctype="multipart/form-data" method="post", action="http://127.0.0.1:5000/spleet">
             <input type="file" id="song" name="song" accept="audio/mpeg, audio/mp4, audio/wav" />
-            <input type="radio" id="two-stem-separation" name="separation_type" value="2stems">
+            <input type="radio" id="two-stem-separation" name="separation_type" value="2stems" checked>
             <label for="two-stem-separation">Vocals/accompaniment</label>
             <input type="radio" id="four-stem-separation" name="separation_type" value="4stems">
             <label for="four-stem-separation">Vocals/drums/bass/other</label>
