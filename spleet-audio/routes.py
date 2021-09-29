@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, current_app
 from werkzeug.utils import secure_filename, send_file
 
 from .separation import separate_2stems, separate_4stems
-from .utils import id_generator, zipped_output_file
+from .utils import clean_folder, id_generator, zipped_output_file
 
 bp = Blueprint('routes', __name__)
 
@@ -36,6 +36,15 @@ def spleet():
     prediction_path = os.path.join(output_folder, filename)
 
     song_zip = zipped_output_file(prediction_path)
+
+    clean_folder(upload_folder)
+    clean_folder(output_folder)
     
-    return send_file(song_zip, environ=request.environ, as_attachment=True, download_name=filename + '.zip', mimetype='application/zip')
+    return send_file(
+        song_zip, 
+        environ=request.environ, 
+        as_attachment=True, 
+        download_name=filename + '.zip', 
+        mimetype='application/zip'
+    )
     
