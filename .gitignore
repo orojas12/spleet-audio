@@ -6,3 +6,5 @@ venv/
 config.py
 
 uploads/
+predictions/
+pretrained_models/
