@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="my-5 container-md d-flex flex-column justify-content-center align-items-center">
-        <h1 class="mb-5">Spleet Audio</h1>
+        <h1 class="fs-1 fw-bolder mb-5">Spleet Audio</h1>
         <div class="w-50">
             <p class="px-2"><b>spleet</b> <i>[\'splēt\]</i> <b>:</b></p>
             <ul><li><i>verb.</i> To split or separate an audio track into its different instrument sections.</li></ul>
@@ -18,16 +18,9 @@
         
     </header>
     <main class="my-5 container-md">
-        <form class="container w-50" id="formUpload", enctype="multipart/form-data" method="post", action="http://127.0.0.1:5000/spleet">
-            <!-- <input type="file" id="song" name="song" accept="audio/mpeg, audio/mp4, audio/wav" />
-            <input type="radio" id="two-stem-separation" name="separation_type" value="2stems" checked>
-            <label for="two-stem-separation">Vocals/accompaniment</label>
-            <input type="radio" id="four-stem-separation" name="separation_type" value="4stems">
-            <label for="four-stem-separation">Vocals/drums/bass/other</label>
-            <button id="submit">Split</button> -->
-            
+        <form class="container w-50" id="formUpload", enctype="multipart/form-data" method="post", action="http://127.0.0.1:5000/spleet">  
             <div class="input-group mb-4">
-                <input class="form-control" type="file" id="inputAudioFile" accept="audio/mpeg, audio/mp4, audio/wav" name="song">
+                <input class="form-control" type="file" id="inputAudioFile" accept="audio/mpeg, audio/mp4, audio/wav" name="upload" required>
             </div>
             <div class="d-flex justify-content-between mb-4">
                 <select class="form-select w-50" id="selectSepType" name="separation_type" aria-label="Select separator type">
@@ -38,25 +31,14 @@
                     <div class="spinner-border text-primary visually-hidden" id="spinner" role="status"></div>
                     <button class="btn btn-primary" type="submit" id="btnSubmit">Spleet!</button>
                 </div>
-                
-            </div>
-            
-            <!-- <div class="form-check">
-                <input class="form-check-input" type="radio" id="radSepType1" name="sepType" checked>
-                <label class="form-check-label" for="radSepType1">
-                    Vocals/accompaniment
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="radSepType2" name="sepType">
-                <label class="form-check-label" for="radSepType2">
-                    Vocals/drums/bass/other
-                </label> -->
             </div>
         </form>
+        {% block results %}
+        {% endblock %}
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='base.js') }}"></script>
+    {% block script %}{% endblock %}
 </body>
 </html>

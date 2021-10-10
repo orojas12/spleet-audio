@@ -24,3 +24,21 @@ def clean_folder(dir_path):
                 shutil.rmtree(path)
         except OSError as e:
             print(f"Failed to delete item: {path}. {e}")
+
+def get_prediction_data(prediction_path, prediction_id):
+    """
+        Return a list of dicts (one dict for each file) that contain: 
+        song_id, filename, download_url
+    """
+    prediction_data = []
+    for file in os.listdir(prediction_path):
+        track = {}
+        track['id'] = prediction_id
+        track['filename'] = file
+        prediction_data.append(track)
+
+def get_file_names(dir_path):
+    file_names = []
+    for file in os.listdir(dir_path):
+        file_names.append(file)
+    return file_names

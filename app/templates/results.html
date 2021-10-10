@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block results %}
+<div class="my-5 container-md d-flex flex-column align-items-center">
+    <h4 class="fs-4 fw-normal">{{ upload_name }}</h4>
+    <ul id="prediction" class="list-group w-50" 
+        data-prediction-id="{{ prediction_id }}">
+        {% for name in track_names %}
+            <li class="list-group-item">
+                <a href="" data-name="{{ name }}">
+                    {{ name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='results.js') }}"></script>
+{% endblock %}

@@ -4,6 +4,12 @@ from spleeter.audio.adapter import AudioAdapter
 audio_loader = AudioAdapter.default()
 sample_rate = 44100
 
+def separate(src, dst, name, separation_type):
+    if separation_type == '2stems':
+        separate_2stems(src, dst, name)
+    elif separation_type == '4stems':
+        separate_4stems(src, dst, name)
+
 def separate_2stems(src, dst, name):
     separator_2stems = Separator('spleeter:2stems')
     
