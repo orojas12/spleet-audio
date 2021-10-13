@@ -1,4 +1,4 @@
 import os
 
-UPLOAD_FOLDER=os.path.abspath('app/static/uploads')
-OUTPUT_FOLDER=os.path.abspath('app/static/predictions')
+UPLOAD_FOLDER=os.environ['UPLOAD_FOLDER']
+OUTPUT_FOLDER=os.environ['OUTPUT_FOLDER']

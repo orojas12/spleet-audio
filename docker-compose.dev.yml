@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    image: spleet-audio
+    command: sh -c "python3 -m flask run --host=0.0.0.0 --port=5000"
+    environment:
+      FLASK_APP: app:create_app()
+      FLASK_ENV: development
+      UPLOAD_FOLDER: /spleet-audio/uploads
+      OUTPUT_FOLDER: /spleet-audio/predictions
+      MODEL_PATH: /spleet-audio/model
+    ports:
+    - 5000:5000
+    volumes:
+    - ./app:/spleet-audio/app
+    - uploads:/spleet-audio/uploads
+    - predictions:/spleet-audio/predictions
+    - spleeter_model:/spleet-audio/model
+
+volumes:
+  uploads:
+  predictions:
+  spleeter_model:
+
+
