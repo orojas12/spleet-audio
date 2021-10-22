@@ -2,13 +2,13 @@
 
 {% block results %}
 <div class="my-5 container-md d-flex flex-column align-items-center">
-    <h4 class="fs-4 fw-normal">{{ upload_name }}</h4>
+    <h4 class="fs-4 fw-normal mb-2">{{ upload_name }}</h4>
     <ul id="prediction" class="list-group w-50" 
         data-prediction-id="{{ prediction_id }}">
         {% for name in track_names %}
             <li class="list-group-item">
-                <a href="" data-name="{{ name }}">
-                    {{ name }}
+                <a href="#" data-name="{{ name }}">
+                    {{ upload_name }}_{{ name }}
                 </a>
             </li>
         {% endfor %}

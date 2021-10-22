@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, request, render_template, current_app
+from flask import Blueprint, request, render_template, current_app, make_response
 from werkzeug.utils import secure_filename, send_file
 
 from .separation import separate
@@ -38,12 +38,16 @@ def spleet():
     track_names = get_file_names(prediction_path)
 
     # clean_folder(upload_folder)
-    
-    return render_template('results.html', 
-        upload_name=filename, 
-        prediction_id=prediction_id, 
-        track_names=track_names
+
+    response = make_response(
+        render_template('results.html', 
+            upload_name=filename, 
+            prediction_id=prediction_id, 
+            track_names=track_names
+        )
     )
+    response.headers['Cache-Control'] = 'no-store, max-age=0'
+    return response
 
 @bp.route('/download/<id>/<file>', methods=['GET'])
 def download(id, file):
